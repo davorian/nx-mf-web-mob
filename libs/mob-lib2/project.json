@@ -1,0 +1,63 @@
+{
+  "name": "mob-lib2",
+  "root": "libs/mob-lib2",
+  "sourceRoot": "libs/mob-lib2/src",
+  "projectType": "library",
+  "targets": {
+    "build-ios": {
+          "executor": "@nx/react-native:build-ios",
+          "options": {}
+    },
+    "bundle-ios": {
+          "executor": "@nx/react-native:bundle-ios",
+          "options": {}
+        },
+        "run-ios": {
+            "executor": "@nx/react-native:run-ios",
+           "options": {}
+        },
+    "build-android": {
+      "executor": "@nx/react-native:build-android",
+      "options": {}
+    },
+    "bundle-android": {
+      "executor": "@nx/react-native:bundle-android",
+      "options": {}
+    },
+    "run-android": {
+      "executor": "@nx/react-native:run-android",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/mob-lib2"
+        ]
+      }
+    },
+    "test": {
+        "executor": "@nx/jest:jest",
+        "outputs": ["{workspaceRoot}/coverage/libs/mob-lib2"],
+         "options": {
+            "jestConfig": "libs/mob-lib2/jest.config.ts",
+             "passWithNoTests": true
+          },
+        "configurations": {
+          "ci": {
+            "ci": true,
+            "codeCoverage": true
+          }
+         }
+   },
+   "serve": {
+     "executor": "nx:run-commands",
+     "options": {
+       "command": "yarn start",
+       "cwd": "apps/mob-lib2"
+     }
+   }
+  },
+  "tags": ["scope:mob-component"]
+}

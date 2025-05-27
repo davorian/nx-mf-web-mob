@@ -1,0 +1,21 @@
+{
+  "extends": "@nx/js/tsconfig.base",
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "web-lib1": [
+        "libs/web-lib1/src/index.ts"
+      ],
+      "web-lib2": [
+        "libs/web-lib2/src/index.ts"
+      ],
+      "mob-lib1": [
+        "libs/mob-lib1/src/index.ts"
+      ],
+      "mob-lib2": [
+        "libs/mob-lib2/src/index.ts"
+      ]
+    }
+  }
+}

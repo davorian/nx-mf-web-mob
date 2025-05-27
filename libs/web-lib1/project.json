@@ -1,0 +1,81 @@
+{
+  "name": "web-lib1",
+  "root": "libs/web-lib1",
+  "sourceRoot": "libs/web-lib1/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/rspack:rspack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "web",
+        "outputPath": "dist/libs/web-lib1",
+        "main": "libs/web-lib1/src/main.tsx",
+        "tsConfig": "libs/web-lib1/tsconfig.app.json",
+        "rspackConfig": "libs/web-lib1/rspack.config.mjs",
+        "assets": [
+          "libs/web-lib1/src/assets"
+        ]
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production",
+          "optimization": true,
+          "sourceMap": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/rspack:dev-server",
+      "options": {
+        "buildTarget": "web-lib1:build",
+        "hmr": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "web-lib1:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "web-lib1:build:production"
+        }
+      }
+    },
+     "serve-static": {
+      "executor": "@nx/web:file-server",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "web-lib1:build",
+        "spa": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/web-lib1"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}/web-lib1"],
+      "options": {
+        "jestConfig": "libs/web-lib1/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": ["scope:web-component"]
+}

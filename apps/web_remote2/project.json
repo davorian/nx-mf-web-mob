@@ -1,0 +1,81 @@
+{
+  "name": "web_remote2",
+  "root": "apps/web_remote2",
+  "sourceRoot": "apps/web_remote2/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/rspack:rspack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "web",
+        "outputPath": "dist/apps/web_remote2",
+        "main": "apps/web_remote2/src/main.tsx",
+        "tsConfig": "apps/web_remote2/tsconfig.app.json",
+        "rspackConfig": "apps/web_remote2/rspack.config.mjs",
+        "assets": [
+          "apps/web_remote2/src/assets"
+        ]
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production",
+          "optimization": true,
+          "sourceMap": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/rspack:dev-server",
+      "options": {
+        "buildTarget": "web_remote2:build",
+        "hmr": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "web_remote2:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "web_remote2:build:production"
+        }
+      }
+    },
+     "serve-static": {
+      "executor": "@nx/web:file-server",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "web_remote2:build",
+        "spa": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/web_remote2"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}/web_remote2"],
+      "options": {
+        "jestConfig": "apps/web_remote2/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": ["scope:web"]
+}

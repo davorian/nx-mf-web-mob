@@ -1,0 +1,8 @@
+{
+  "name": "web_remote2",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "main": "src/app/app.tsx",
+  "_comment": "Shared dependencies are managed in ../../shared-deps.json and ../../shared-deps-web.json"
+}

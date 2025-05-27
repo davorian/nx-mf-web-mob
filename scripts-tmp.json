@@ -1,0 +1,20 @@
+{
+  "start:webhost": "nx serve web_host",
+  "start:mobhost:ios": "cd apps/mob_host && yarn ios",
+  "start:mobhost:android": "cd apps/mob_host && yarn android",
+  "start:web_remote1": "NX_DAEMON=false nx serve web_remote1",
+  "start:web_remote2": "NX_DAEMON=false nx serve web_remote2",
+  "start:web_remote3": "NX_DAEMON=false nx serve web_remote3",
+  "start:web_remote4": "NX_DAEMON=false nx serve web_remote4",
+  "start:mob_remote1:ios": "cd apps/mob_remote1 && PORT=8082 WEBPACK_PORT=8082 react-native webpack-start",
+  "start:mob_remote1:android": "cd apps/mob_remote1 && PORT=8082 WEBPACK_PORT=8082 react-native webpack-start",
+  "start:mob_remote2:ios": "cd apps/mob_remote2 && PORT=8083 WEBPACK_PORT=8083 react-native webpack-start",
+  "start:mob_remote2:android": "cd apps/mob_remote2 && PORT=8083 WEBPACK_PORT=8083 react-native webpack-start",
+  "start:mob_remote3:ios": "cd apps/mob_remote3 && PORT=8084 WEBPACK_PORT=8084 react-native webpack-start",
+  "start:mob_remote3:android": "cd apps/mob_remote3 && PORT=8084 WEBPACK_PORT=8084 react-native webpack-start",
+  "start:mob_remote4:ios": "cd apps/mob_remote4 && PORT=8085 WEBPACK_PORT=8085 react-native webpack-start",
+  "start:mob_remote4:android": "cd apps/mob_remote4 && PORT=8085 WEBPACK_PORT=8085 react-native webpack-start",
+  "start:webstack": "concurrently --kill-others-on-fail \"yarn start:web_remote1\" \"yarn start:web_remote2\" \"yarn start:web_remote3\" \"yarn start:web_remote4\" \"yarn start:webhost\"",
+  "start:mobstack:ios": "concurrently --kill-others-on-fail --name mob_remote1 --name mob_remote2 --name mob_remote3 --name mob_remote4  \"yarn start:mob_remote1:ios\" \"yarn start:mob_remote2:ios\" \"yarn start:mob_remote3:ios\" \"yarn start:mob_remote4:ios\"  && yarn start:mobhost:ios",
+  "start:mobstack:android": "concurrently --kill-others-on-fail --name mob_remote1 --name mob_remote2 --name mob_remote3 --name mob_remote4  \"yarn start:mob_remote1:android\" \"yarn start:mob_remote2:android\" \"yarn start:mob_remote3:android\" \"yarn start:mob_remote4:android\"  && yarn start:mobhost:android"
+}

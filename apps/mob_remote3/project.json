@@ -1,0 +1,63 @@
+{
+  "name": "mob_remote3",
+  "root": "apps/mob_remote3",
+  "sourceRoot": "apps/mob_remote3/src",
+  "projectType": "remote",
+  "targets": {
+    "build-ios": {
+          "executor": "@nx/react-native:build-ios",
+          "options": {}
+    },
+    "bundle-ios": {
+          "executor": "@nx/react-native:bundle-ios",
+          "options": {}
+        },
+        "run-ios": {
+            "executor": "@nx/react-native:run-ios",
+           "options": {}
+        },
+    "build-android": {
+      "executor": "@nx/react-native:build-android",
+      "options": {}
+    },
+    "bundle-android": {
+      "executor": "@nx/react-native:bundle-android",
+      "options": {}
+    },
+    "run-android": {
+      "executor": "@nx/react-native:run-android",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/mob_remote3"
+        ]
+      }
+    },
+    "test": {
+        "executor": "@nx/jest:jest",
+        "outputs": ["{workspaceRoot}/coverage/apps/mob_remote3"],
+         "options": {
+            "jestConfig": "apps/mob_remote3/jest.config.ts",
+             "passWithNoTests": true
+          },
+        "configurations": {
+          "ci": {
+            "ci": true,
+            "codeCoverage": true
+          }
+         }
+   },
+   "serve": {
+     "executor": "nx:run-commands",
+     "options": {
+       "command": "yarn start",
+       "cwd": "apps/mob_remote3"
+     }
+   }
+  },
+  "tags": ["scope:mob"]
+}
