@@ -11,7 +11,9 @@ export default function App() {
 
       and in rspack.config.mjs have  const config = curly brace open "entry":colon ... curly brace close
 
-      that way HMR works out of the box and you don't get any strange type errors!!!</Text>
+      that way HMR works out of the box and you don't get any strange type errors!!!
+
+      And now using repack 5.1.1</Text>
 
     </View>
   );
