@@ -69,7 +69,6 @@ export default (env) => {
       path: path.join(dirname, 'build', 'mob_remote1', platform),
       filename: 'index.bundle',
       chunkFilename: '[name].chunk.bundle',
-      publicPath: Repack.getPublicPath({ platform, devServer }),
       uniqueName: 'mob_remote1',
     },
     optimization: {
@@ -78,45 +77,8 @@ export default (env) => {
     },
     module: {
       rules: [
-        Repack.REACT_NATIVE_LOADING_RULES,
-        Repack.NODE_MODULES_LOADING_RULES,
-        Repack.FLOW_TYPED_MODULES_LOADING_RULES,
-        {
-          test: /\.[jt]sx?$/,
-          type: 'javascript/auto',
-          exclude: [/node_modules/],
-          use: {
-            loader: 'builtin:swc-loader',
-            options: {
-              env: {
-                targets: { 'react-native': '0.77' },
-              },
-              jsc: {
-                assumptions: {
-                  setPublicClassFields: true,
-                  privateFieldsAsProperties: true,
-                },
-                externalHelpers: true,
-                transform: {
-                  react: {
-                    runtime: 'automatic',
-                  },
-                },
-              },
-            },
-          },
-        },
-        {
-          test: Repack.getAssetExtensionsRegExp(Repack.ASSET_EXTENSIONS),
-          use: {
-            loader: '@callstack/repack/assets-loader',
-            options: {
-              platform,
-              devServerEnabled: Boolean(devServer),
-              inline: true,
-            },
-          },
-        },
+        ...Repack.getJsTransformRules(),
+        ...Repack.getAssetTransformRules(),
       ],
     },
     plugins: [
