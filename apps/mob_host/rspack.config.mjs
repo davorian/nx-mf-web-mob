@@ -12,7 +12,7 @@ import rspack from '@rspack/core';
 const dirname = Repack.getDirname(import.meta.url)
 const zephyrDisabled = true
 
-/** @type {(env: import('@callstack/repack').EnvOptions) => import('@rspack/core').Configuration} */
+// /** @type {(env: import('@callstack/repack').EnvOptions) => import('@rspack/core').Configuration} */
 export default (env) => {
 
   const sharedDepsMobile = JSON.parse(
@@ -98,7 +98,6 @@ export default (env) => {
       path: path.join(dirname, 'build', 'host', platform),
       filename: 'index.bundle',
       chunkFilename: '[name].chunk.bundle',
-      publicPath: Repack.getPublicPath({ platform, devServer }),
       uniqueName: 'mob_host',
     },
     /** Configures optimization of the built bundle. */
@@ -110,45 +109,8 @@ export default (env) => {
     },
     module: {
       rules: [
-        Repack.REACT_NATIVE_LOADING_RULES,
-        Repack.NODE_MODULES_LOADING_RULES,
-        Repack.FLOW_TYPED_MODULES_LOADING_RULES,
-        {
-          test: /\.[jt]sx?$/,
-          type: 'javascript/auto',
-          exclude: /node_modules\/(?!@react-native-masked-view)/, // Exclude all but this package
-          use: {
-            loader: 'builtin:swc-loader',
-            options: {
-              env: {
-                targets: { 'react-native': '0.77' },
-              },
-              jsc: {
-                assumptions: {
-                  setPublicClassFields: true,
-                  privateFieldsAsProperties: true,
-                },
-                externalHelpers: true,
-                transform: {
-                  react: {
-                    runtime: 'automatic',
-                  },
-                },
-              },
-            },
-          },
-        },
-        {
-          test: Repack.getAssetExtensionsRegExp(Repack.ASSET_EXTENSIONS),
-          use: {
-            loader: '@callstack/repack/assets-loader',
-            options: {
-              platform,
-              devServerEnabled: Boolean(devServer),
-              inline: true,
-            },
-          },
-        },
+        ...Repack.getJsTransformRules(),
+        ...Repack.getAssetTransformRules(),
       ],
     },
     plugins: [
